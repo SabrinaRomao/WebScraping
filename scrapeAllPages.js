@@ -51,3 +51,16 @@ function scrape() {
   })
 
 }
+horseman
+  .on('consoleMessage', function (msg) {
+    console.log(msg)
+  })
+  .open('https://www.carrefour.com.br/verduras-e-legumes?crfint=hm-tado')
+  .then(scrape)
+  .finally(function () {
+    fs.writeFile('xxxxxData.txt', JSON.stringify(finalData), (err) => {
+      if (err) throw err
+      console.log('The file has been saved!')
+      horseman.close()
+    })
+  })
