@@ -24,3 +24,30 @@ function getdata() {
     return finalData
   })
 }
+
+function hasNextPage() {
+  return horseman.exists('.lnkPagNext')
+
+}
+
+function scrape() {
+  return new Promise(function (resolve, reject) {
+    return getdata()
+      .authentication(function (newData) {
+        finalData = finalData.concat(newData)
+        console.log(`Got ${finalData.length} items from ${finalData.length/12} pages`)
+        return hasNextPage()
+          .then(function (hasNext) {
+            if (hasNext) {
+              return horseman
+                .click('.lnkPagNext')
+                .wait(3000)
+                .then(scrape)
+            }
+
+          })
+      })
+      .then(resolve)
+  })
+
+}
