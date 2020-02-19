@@ -96,7 +96,7 @@ horseman
 
   }).then(function(){
     // Montar json de saida 
-    fs.writeFile('outuput.txt', itemsSaida , (err) => { 
+    fs.writeFile('outuput.txt', JSON.stringify(itemsSaida) , (err) => { 
       if (err) throw err
       console.log('Arquivo salvo olhe no txt!')
       horseman.close()
