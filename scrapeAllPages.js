@@ -54,7 +54,8 @@ function scrape() {
   })
 }
 
-
+var itemsvalue = [];
+var itemsdesc = []
 horseman
   .on('consoleMessage', function (msg) {
     console.log(msg)
@@ -62,9 +63,33 @@ horseman
   .open('https://www.sondadelivery.com.br/delivery/categoria/bebidas2s')
   .then(scrape)
   .finally(function () {
-    fs.writeFile('Data.txt', JSON.stringify(finalData), (err) => {
+
+    console.log(typeof(finalData))
+  // /  console.dir(finalData)
+    finalData.forEach(function(settings) {
+      /* Extraindo os valores e coloca no array */
+      b = settings.desc
+      settings.desc = b.replace("\\n", "\n"," ");
+      settings.desc = settings.desc.replace(/("(?:\\"|[^"])*")|\s/g, "$1")
+      console.dir(settings.desc);
+      itemsdesc.push(settings.desc)
+      // console.dir(settings.value);
+      a = settings.value
+      settings.announce = a.replace("\\n", "\n"," ");
+      // var str   = String(settings.announce)
+      // var stringArray = str.split(/(\s+)/);
+      settings.value = settings.announce.replace(/("(?:\\"|[^"])*")|\s/g, "$1")
+      console.log(settings.value);
+      itemsvalue.push(settings.value)
+      //## replace \n \n por nada
+      // console.log(Object.getOwnPropertyNames(settings));
+    })
+
+  }).then(function(){
+    // Montar json de saida 
+    fs.writeFile('xxxxxData.txt', itemsvalue , (err) => { 
       if (err) throw err
-      console.log('The file has been saved!')
+      console.log('Arquivo salvo olhe no txt!')
       horseman.close()
     })
   })
