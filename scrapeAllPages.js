@@ -66,9 +66,14 @@ horseman
   .open('https://www.sondadelivery.com.br/delivery/categoria/bebidas2s')
   .then(scrape)
   .finally(function () {
+
+
     var obj ={
       desc:"",
-      value:""
+      value:"",
+      produto:"",
+      valorNormal:"",
+      valorDesconto:""
   }
     console.log(typeof(finalData))
   // /  console.dir(finalData)
@@ -96,6 +101,7 @@ horseman
 
   }).then(function(){
     // Montar json de saida 
+    console.log(itemsSaida)
     fs.writeFile('outuput.txt', JSON.stringify(itemsSaida) , (err) => { 
       if (err) throw err
       console.log('Arquivo salvo olhe no txt!')
